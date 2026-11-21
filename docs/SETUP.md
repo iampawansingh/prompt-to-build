@@ -38,20 +38,21 @@
 
   ```bash
   uv sync --locked
-  uv run --locked python check_setup.py
-  uv run --locked streamlit run app.py --server.address localhost
+  uv run --locked python scripts/check_setup.py
+  uv run --locked streamlit run src/placement_tracker/app.py --server.address localhost
   ```
 
 - Open the printed URL, usually `http://localhost:8501`; keep the terminal running.
 - Expect a passed readiness check and six fictional applications. The starter has no entry or edit form yet.
 - Stop with Ctrl+C, repeat the last command and confirm the six rows remain.
-- Use that same run command on later visits; open `app.py` and `db.py` in your editor.
+- Use that same run command on later visits; begin reading `src/placement_tracker/app.py` and `database.py`.
 - Sign into your AI chat service, GitHub and LinkedIn before arrival.
+- Check the starter with `uv run --locked python -m unittest discover -s tests -v`.
 
 ## If something fails
 
 - `uv` not found: reopen the terminal after installation.
-- Missing files: open the terminal in `prompt-to-build`, beside `app.py`, `pyproject.toml` and `uv.lock`.
+- Missing files: open the terminal in `prompt-to-build`, beside `src/`, `pyproject.toml` and `uv.lock`.
 - Dependency problem: rerun `uv sync --locked`; share the exact error with support.
 - Port busy: append `--server.port 8502` to the run command.
 - Database locked: stop duplicate app processes and close database viewers.

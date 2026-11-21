@@ -1,18 +1,19 @@
 """Small local SQLite layer. Each function opens and closes its own connection."""
 from contextlib import contextmanager
+from importlib.resources import files
 from pathlib import Path
 import json
-import os
 import sqlite3
 
-ROOT = Path(__file__).resolve().parent
-DB_PATH = Path(os.environ.get("PTB_DB_PATH", ROOT / "data" / "applications.db"))
-STATUSES = ("Draft", "Applied", "Interview", "Offer", "Rejected")
+from placement_tracker import config
+
 
 @contextmanager
-def connection():
-    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(DB_PATH, timeout=10)
+def connection(db_path=None):
+    """Commit successful operations, roll back errors, and always close."""
+    path = Path(db_path) if db_path is not None else config.DB_PATH
+    path.parent.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(path, timeout=10)
     conn.row_factory = sqlite3.Row
     try:
         with conn:
@@ -20,9 +21,10 @@ def connection():
     finally:
         conn.close()
 
-def init_db():
+
+def init_db(db_path=None):
     """Create the schema and seed once. Reruns do not duplicate sample rows."""
-    with connection() as conn:
+    with connection(db_path) as conn:
         conn.execute("""CREATE TABLE IF NOT EXISTS applications (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             company TEXT NOT NULL,
@@ -36,17 +38,21 @@ def init_db():
         conn.execute("CREATE TABLE IF NOT EXISTS metadata (key TEXT PRIMARY KEY)")
         seeded = conn.execute("SELECT 1 FROM metadata WHERE key = ?", ("seeded",)).fetchone()
         if not seeded:
-            rows = json.loads((ROOT / "sample_data.json").read_text(encoding="utf-8"))
+            sample_file = files("placement_tracker").joinpath(
+                "resources", "sample_applications.json"
+            )
+            rows = json.loads(sample_file.read_text(encoding="utf-8"))
             conn.executemany("""INSERT INTO applications
                 (company, role, application_date, status, job_link, notes)
                 VALUES (:company, :role, :application_date, :status, :job_link, :notes)""", rows)
             conn.execute("INSERT INTO metadata(key) VALUES (?)", ("seeded",))
 
-def list_applications():
+
+def list_applications(db_path=None):
     """Return independent dictionaries sorted by ID, newest first."""
-    with connection() as conn:
+    with connection(db_path) as conn:
         return [dict(row) for row in conn.execute("SELECT * FROM applications ORDER BY id DESC")]
 
 # Activity B2: add validation and add_application here.
 
-# Activity B3: add update_application using a stable record ID here.
+# Activity B4: add update_application using a stable record ID here.
