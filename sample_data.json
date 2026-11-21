@@ -1,0 +1,50 @@
+[
+  {
+    "company": "Aster Labs",
+    "role": "Python Intern",
+    "application_date": "2026-11-01",
+    "status": "Applied",
+    "job_link": "https://example.com/aster",
+    "notes": "Fictional sample application"
+  },
+  {
+    "company": "Birch Systems",
+    "role": "Data Intern",
+    "application_date": "2026-11-03",
+    "status": "Interview",
+    "job_link": "https://example.com/birch",
+    "notes": "Prepare SQL examples"
+  },
+  {
+    "company": "Cedar Digital",
+    "role": "Junior Developer",
+    "application_date": "2026-11-05",
+    "status": "Applied",
+    "job_link": "",
+    "notes": "Portfolio shared"
+  },
+  {
+    "company": "Delta Analytics",
+    "role": "Analyst Trainee",
+    "application_date": "2026-11-07",
+    "status": "Offer",
+    "job_link": "https://example.com/delta",
+    "notes": "Compare learning opportunities"
+  },
+  {
+    "company": "Elm Studio",
+    "role": "Web Intern",
+    "application_date": "2026-11-09",
+    "status": "Rejected",
+    "job_link": "",
+    "notes": "Ask for feedback"
+  },
+  {
+    "company": "Fern Software",
+    "role": "QA Intern",
+    "application_date": "2026-11-11",
+    "status": "Draft",
+    "job_link": "https://example.com/fern",
+    "notes": "Review application before sending"
+  }
+]
