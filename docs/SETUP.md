@@ -27,19 +27,85 @@
 
 ## Set up and run on any OS
 
-- Clone the starter and enter its folder:
+### 1.  Clone the starter, enter its folder and inspect:
 
   ```bash
-  git clone https://github.com/iampawansingh/prompt-to-build.git
-  cd prompt-to-build
+    git clone https://github.com/iampawansingh/prompt-to-build.git
+    cd prompt-to-build
+
+  # check the content of the cloned repo - folder and fields
+  ## Mac/ Linux
+    tree
+
+  ## Windows
+    tree /f
+
+    ├── docs
+    │   ├── ATTRIBUTION.md
+    │   └── SETUP.md
+    ├── prompts
+    │   └── prompts.md
+    ├── pyproject.toml
+    ├── README.md
+    ├── requirements.txt
+    ├── scripts
+    │   └── check_setup.py
+    ├── src
+    │   └── placement_tracker
+    │       ├── __init__.py
+    │       ├── app.py
+    │       ├── config.py
+    │       ├── database.py
+    │       └── resources
+    │           └── sample_applications.json
+    ├── tests
+    │   ├── test_app.py
+    │   └── test_database.py
+    └── uv.lock
   ```
 
-- Open this folder in VS Code, then run each command in its terminal:
+
+### 2. Open this folder in VS Code, then run each command in its terminal/ PowerShell/ CommandPrompt:
 
   ```bash
+  # install dependencies as given in the requirements.txt
   uv sync --locked
-  uv run --locked python scripts/check_setup.py
-  uv run --locked streamlit run src/placement_tracker/app.py --server.address localhost
+
+  # check if above creates `.venv` folder i.e. it creates a virtual env
+
+  ## Mac/ Linux
+    ls -la
+
+  # Windows - PowerShell
+    gci -Force or ls -Force
+
+  # Windows - CommandPrompt
+    dir /a
+
+  # Activate the venv
+    source .venv/bin/activate
+  ```
+
+  ```python
+  
+  # Check if setup has completed properly
+    python scripts/check_setup.py
+
+  output
+  ----------------------------------------------------------------------------------------------------
+  Interpreter: <your project path>/.venv/bin/python
+  Python: 3.12.11
+  SQLite: 3.47.1
+  Streamlit: 1.67.0
+  Package: <your project path>/src/placement_tracker/__init__.py
+  Readiness checks passed.
+  ----------------------------------------------------------------------------------------------------
+  Execute below to start the application
+  streamlit run src/placement_tracker/app.py --server.address localhost
+  ----------------------------------------------------------------------------------------------------
+
+  # Start the application
+  streamlit run src/placement_tracker/app.py --server.address localhost
   ```
 
 - Open the printed URL, usually `http://localhost:8501`; keep the terminal running.

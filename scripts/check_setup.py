@@ -12,6 +12,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
+    print("-"*100)
     print("Interpreter:", sys.executable)
     print("Python:", sys.version.split()[0])
     print("SQLite:", sqlite3.sqlite_version)
@@ -39,9 +40,12 @@ def main():
     expected_package = PROJECT_ROOT / "src" / "placement_tracker" / "__init__.py"
     if Path(placement_tracker.__file__).resolve() != expected_package.resolve():
         raise SystemExit("Package points to another checkout. Run uv sync --locked here.")
+    
     print("Package:", placement_tracker.__file__)
     print("Readiness checks passed.")
-    print("Next: uv run --locked streamlit run src/placement_tracker/app.py --server.address localhost")
+    print("-"*100)
+    print("Execute below to start the application")
+    print("streamlit run src/placement_tracker/app.py --server.address localhost")
 
 
 if __name__ == "__main__":
